@@ -1,0 +1,26 @@
+{{ define "title" }}Home{{ end }}
+
+{{ define "content" }}
+<div class="welcome">
+    <h1>Welcome to Ahsehdis</h1>
+    
+    {{ if .IsAuthenticated }}
+        <a href="/story/submit" class="button">Submit New Story</a>
+    {{ end }}
+</div>
+
+<div class="story-list">
+    {{ range .Stories }}
+    <div class="story">
+        <h2>{{ .Title }}</h2>
+        <p>{{ truncate .Content 100 }}</p>
+        <div class="meta">
+            <span>By {{ .UserEmail }}</span>
+            <span>{{ .CreatedAt.Format "2006-01-02" }}</span>
+        </div>
+    </div>
+    {{ else }}
+    <p>No stories found. Be the first to submit one!</p>
+    {{ end }}
+</div>
+{{ end }}

@@ -1,0 +1,36 @@
+{{ define "base" }}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{{ template "title" . }} - Ahsehdis</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+</head>
+<body>
+    <header>
+        <nav>
+            {{ if .IsAuthenticated }}
+                <form action="/logout" method="POST" class="logout-form">
+                    {{ .csrfField }}
+                    <button type="submit" class="btn-logout">Logout</button>
+                </form>
+                <a href="/story/submit" class="nav-link">Submit Story</a>
+            {{ else }}
+                <a href="/login" class="nav-link">Login</a>
+                <span class="nav-separator">|</span>
+                <a href="/signup" class="nav-link">Signup</a>
+            {{ end }}
+            <a href="/" class="nav-link">Home</a>
+        </nav>
+    </header>
+    
+    <main>
+        {{ template "content" . }}
+    </main>
+
+    <footer>
+        <!-- Add your footer content here -->
+    </footer>
+</body>
+</html>
+{{ end }}

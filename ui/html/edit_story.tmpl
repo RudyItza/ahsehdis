@@ -1,0 +1,28 @@
+{{define "title"}}Edit Story{{end}}
+
+{{define "content"}}
+<div class="form-container">
+    <h1>Edit Story</h1>
+    
+    <form method="post" action="/story/update">
+        {{.csrfField}}
+        <input type="hidden" name="id" value="{{.Story.ID}}">
+        
+        <div>
+            <label>Title:</label>
+            <input type="text" name="title" value="{{.Story.Title}}" required>
+            {{with .Errors.title}}<div class="error">{{.}}</div>{{end}}
+        </div>
+        
+        <div>
+            <label>Content:</label>
+            <textarea name="content" required>{{.Story.Content}}</textarea>
+            {{with .Errors.content}}<div class="error">{{.}}</div>{{end}}
+        </div>
+        
+        <button type="submit">Update Story</button>
+    </form>
+    
+    <a href="/" class="back-link">Back to Home</a>
+</div>
+{{end}}

@@ -1,0 +1,33 @@
+{{define "title"}}View Stories{{end}}
+
+{{define "content"}}
+<div class="stories-container">
+    <h1>All Stories</h1>
+    
+    {{if .Stories}}
+        <div class="story-list">
+            {{range .Stories}}
+                <div class="story">
+                    <h2>{{.Title}}</h2>
+                    <div class="content">{{.Content}}</div>
+                    <div class="meta">
+                        <span>By {{.UserEmail}}</span>
+                        <span>{{.CreatedAt.Format "Jan 02, 2006"}}</span>
+                    </div>
+                    {{if $.IsAuthenticated}}
+                        <div class="actions">
+                            <a href="/story/edit?id={{.ID}}">Edit</a>
+                            <form action="/story/delete?id={{.ID}}" method="POST" style="display: inline;">
+                                {{$.csrfField}}
+                                <button type="submit" class="link-button">Delete</button>
+                            </form>
+                        </div>
+                    {{end}}
+                </div>
+            {{end}}
+        </div>
+    {{else}}
+        <p>No stories found.</p>
+    {{end}}
+</div>
+{{end}}

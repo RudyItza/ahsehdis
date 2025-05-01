@@ -1,0 +1,22 @@
+{{ define "title" }}Sign Up{{ end }}
+
+{{ define "content" }}
+<h2>Sign Up</h2>
+<form action="/signup/submit" method="POST" novalidate>
+    {{ .csrfField }}
+    
+    <div>
+        <label>Email:</label>
+        <input type="email" name="email" value="{{.Email}}" required>
+        {{ with .Errors.email }}<div class="error">{{ . }}</div>{{ end }}
+    </div>
+    
+    <div>
+        <label>Password:</label>
+        <input type="password" name="password" required>
+        {{ with .Errors.password }}<div class="error">{{ . }}</div>{{ end }}
+    </div>
+    
+    <button type="submit">Sign Up</button>
+</form>
+{{ end }}

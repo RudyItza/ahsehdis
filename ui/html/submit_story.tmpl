@@ -1,0 +1,25 @@
+{{define "title"}}Submit Story{{end}}
+
+{{define "content"}}
+<div class="form-container">
+    <h1>Submit New Story</h1>
+    
+    <form action="/story/create" method="POST">
+        {{.csrfField}}
+        
+        <div>
+            <label>Title:</label>
+            <input type="text" name="title" value="{{.Title}}">
+            {{with .Errors.title}}<div class="error">{{.}}</div>{{end}}
+        </div>
+        
+        <div>
+            <label>Content:</label>
+            <textarea name="content">{{.Content}}</textarea>
+            {{with .Errors.content}}<div class="error">{{.}}</div>{{end}}
+        </div>
+        
+        <button type="submit">Submit Story</button>
+    </form>
+</div>
+{{end}}

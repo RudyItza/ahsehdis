@@ -1,28 +1,28 @@
-{{define "title"}}Edit Story{{end}}
+{{ define "title" }}Edit Story{{ end }}
 
-{{define "content"}}
-<div class="form-container">
-    <h1>Edit Story</h1>
-    
-    <form method="post" action="/story/update">
-        {{.csrfField}}
-        <input type="hidden" name="id" value="{{.Story.ID}}">
-        
-        <div>
-            <label>Title:</label>
-            <input type="text" name="title" value="{{.Story.Title}}" required>
-            {{with .Errors.title}}<div class="error">{{.}}</div>{{end}}
-        </div>
-        
-        <div>
-            <label>Content:</label>
-            <textarea name="content" required>{{.Story.Content}}</textarea>
-            {{with .Errors.content}}<div class="error">{{.}}</div>{{end}}
-        </div>
-        
-        <button type="submit">Update Story</button>
-    </form>
-    
-    <a href="/" class="back-link">Back to Home</a>
+{{ define "content" }}
+<div class="max-w-lg mx-auto bg-white p-6 rounded shadow">
+  <h1 class="text-2xl font-bold mb-6">Edit Story</h1>
+
+  <form method="post" action="/story/update" class="space-y-4">
+    {{ .csrfField }}
+    <input type="hidden" name="id" value="{{ .Story.ID }}">
+
+    <div>
+      <label class="block font-semibold mb-1">Title:</label>
+      <input type="text" name="title" value="{{ .Story.Title }}" required class="w-full border border-gray-300 rounded px-3 py-2">
+      {{ with .Errors.title }}<div class="text-red-600 text-sm mt-1">{{ . }}</div>{{ end }}
+    </div>
+
+    <div>
+      <label class="block font-semibold mb-1">Content:</label>
+      <textarea name="content" required class="w-full border border-gray-300 rounded px-3 py-2 h-40">{{ .Story.Content }}</textarea>
+      {{ with .Errors.content }}<div class="text-red-600 text-sm mt-1">{{ . }}</div>{{ end }}
+    </div>
+
+    <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Update Story</button>
+  </form>
+
+  <a href="/" class="text-blue-600 hover:underline mt-4 inline-block">Back to Home</a>
 </div>
-{{end}}
+{{ end }}

@@ -1,36 +1,39 @@
 {{ define "base" }}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>{{ template "title" . }} - Ahsehdis</title>
-    <link rel="stylesheet" href="/static/css/main.css">
+  <meta charset="UTF-8">
+  <title>{{ template "title" . }} - Meka-tell-yuh</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <header>
-        <nav>
-            {{ if .IsAuthenticated }}
-                <form action="/logout" method="POST" class="logout-form">
-                    {{ .csrfField }}
-                    <button type="submit" class="btn-logout">Logout</button>
-                </form>
-                <a href="/story/submit" class="nav-link">Submit Story</a>
-            {{ else }}
-                <a href="/login" class="nav-link">Login</a>
-                <span class="nav-separator">|</span>
-                <a href="/signup" class="nav-link">Signup</a>
-            {{ end }}
-            <a href="/" class="nav-link">Home</a>
-        </nav>
-    </header>
-    
-    <main>
-        {{ template "content" . }}
-    </main>
+<body class="bg-gray-100 text-gray-800 font-sans">
+  <header class="bg-blue-600 text-white shadow">
+    <nav class="max-w-4xl mx-auto flex justify-between items-center p-4">
+      <div class="space-x-4">
+        <a href="/" class="hover:underline">Home</a>
+        {{ if .IsAuthenticated }}
+          <a href="/story/submit" class="hover:underline">Submit Story</a>
+        {{ else }}
+          <a href="/login" class="hover:underline">Login</a>
+          <a href="/signup" class="hover:underline">Signup</a>
+        {{ end }}
+      </div>
+      {{ if .IsAuthenticated }}
+        <form action="/logout" method="POST" class="inline">
+          {{ .csrfField }}
+          <button type="submit" class="bg-red-500 hover:bg-red-600 px-3 py-1 rounded">Logout</button>
+        </form>
+      {{ end }}
+    </nav>
+  </header>
 
-    <footer>
-        <!-- Add your footer content here -->
-    </footer>
+  <main class="max-w-4xl mx-auto p-6">
+    {{ template "content" . }}
+  </main>
+
+  <footer class="bg-gray-200 text-center text-sm py-4 mt-12">
+    © 2025 Meka-tell-yuh. All rights reserved.
+  </footer>
 </body>
 </html>
 {{ end }}

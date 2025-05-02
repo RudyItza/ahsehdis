@@ -1,26 +1,25 @@
 {{ define "title" }}Home{{ end }}
 
 {{ define "content" }}
-<div class="welcome">
-    <h1>Welcome to Ahsehdis</h1>
-    
-    {{ if .IsAuthenticated }}
-        <a href="/story/submit" class="button">Submit New Story</a>
-    {{ end }}
+<div class="text-center mb-8">
+  <h1 class="text-3xl font-bold mb-4">Welcome to Meka-tell-yuh</h1>
+  {{ if .IsAuthenticated }}
+    <a href="/story/submit" class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Submit New Story</a>
+  {{ end }}
 </div>
 
-<div class="story-list">
-    {{ range .Stories }}
-    <div class="story">
-        <h2>{{ .Title }}</h2>
-        <p>{{ truncate .Content 100 }}</p>
-        <div class="meta">
-            <span>By {{ .UserEmail }}</span>
-            <span>{{ .CreatedAt.Format "2006-01-02" }}</span>
-        </div>
+<div class="space-y-6">
+  {{ range .Stories }}
+    <div class="bg-white p-6 rounded shadow">
+      <h2 class="text-xl font-semibold text-blue-700">{{ .Title }}</h2>
+      <p class="text-gray-700 mt-2">{{ truncate .Content 100 }}</p>
+      <div class="text-sm text-gray-500 mt-4">
+        <span>By {{ .UserEmail }}</span> •
+        <span>{{ .CreatedAt.Format "2006-01-02" }}</span>
+      </div>
     </div>
-    {{ else }}
-    <p>No stories found. Be the first to submit one!</p>
-    {{ end }}
+  {{ else }}
+    <p class="text-gray-600">No stories found. Be the first to submit one!</p>
+  {{ end }}
 </div>
 {{ end }}

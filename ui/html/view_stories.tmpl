@@ -1,33 +1,34 @@
-{{define "title"}}View Stories{{end}}
+{{ define "title" }}View Stories{{ end }}
 
-{{define "content"}}
-<div class="stories-container">
-    <h1>All Stories</h1>
-    
-    {{if .Stories}}
-        <div class="story-list">
-            {{range .Stories}}
-                <div class="story">
-                    <h2>{{.Title}}</h2>
-                    <div class="content">{{.Content}}</div>
-                    <div class="meta">
-                        <span>By {{.UserEmail}}</span>
-                        <span>{{.CreatedAt.Format "Jan 02, 2006"}}</span>
-                    </div>
-                    {{if $.IsAuthenticated}}
-                        <div class="actions">
-                            <a href="/story/edit?id={{.ID}}">Edit</a>
-                            <form action="/story/delete?id={{.ID}}" method="POST" style="display: inline;">
-                                {{$.csrfField}}
-                                <button type="submit" class="link-button">Delete</button>
-                            </form>
-                        </div>
-                    {{end}}
-                </div>
-            {{end}}
+{{ define "content" }}
+<div class="max-w-4xl mx-auto">
+  <h1 class="text-3xl font-bold mb-6">All Stories</h1>
+
+  {{ if .Stories }}
+    <div class="space-y-6">
+      {{ range .Stories }}
+        <div class="bg-white p-6 rounded shadow">
+          <h2 class="text-xl font-semibold text-blue-700">{{ .Title }}</h2>
+          <p class="text-gray-700 mt-2">{{ .Content }}</p>
+          <div class="text-sm text-gray-500 mt-4">
+            <span>By {{ .UserEmail }}</span> •
+            <span>{{ .CreatedAt.Format "Jan 02, 2006" }}</span>
+          </div>
+
+          {{ if $.IsAuthenticated }}
+            <div class="mt-4 space-x-4">
+              <a href="/story/edit?id={{ .ID }}" class="text-blue-600 hover:underline">Edit</a>
+              <form action="/story/delete?id={{ .ID }}" method="POST" class="inline">
+                {{ $.csrfField }}
+                <button type="submit" class="text-red-600 hover:underline">Delete</button>
+              </form>
+            </div>
+          {{ end }}
         </div>
-    {{else}}
-        <p>No stories found.</p>
-    {{end}}
+      {{ end }}
+    </div>
+  {{ else }}
+    <p class="text-gray-600">No stories to show.</p>
+  {{ end }}
 </div>
-{{end}}
+{{ end }}

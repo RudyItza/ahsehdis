@@ -4,25 +4,74 @@
 <div class="max-w-lg mx-auto bg-white p-6 rounded shadow">
   <h1 class="text-2xl font-bold mb-6">Edit Story</h1>
 
+  {{ if .Flash }}
+  <div class="mb-4 p-3 bg-green-100 text-green-700 rounded">
+    {{ .Flash }}
+  </div>
+  {{ end }}
+
   <form method="post" action="/story/update" class="space-y-4">
     {{ .csrfField }}
     <input type="hidden" name="id" value="{{ .Story.ID }}">
 
     <div>
-      <label class="block font-semibold mb-1">Title:</label>
-      <input type="text" name="title" value="{{ .Story.Title }}" required class="w-full border border-gray-300 rounded px-3 py-2">
-      {{ with .Errors.title }}<div class="text-red-600 text-sm mt-1">{{ . }}</div>{{ end }}
+      <label class="block font-semibold mb-1">Title (10-20 characters):</label>
+      <input type="text" name="title" 
+             value="{{ .Story.Title }}" 
+             minlength="10" 
+             maxlength="20" 
+             required
+             class="w-full border border-gray-300 rounded px-3 py-2">
+      {{ with .Errors.title }}
+      <div class="text-red-600 text-sm mt-1">{{ . }}</div>
+      {{ end }}
+      <div class="text-sm text-gray-500 mt-1">
+        {{ len .Story.Title }}/20 characters
+      </div>
     </div>
 
     <div>
-      <label class="block font-semibold mb-1">Content:</label>
-      <textarea name="content" required class="w-full border border-gray-300 rounded px-3 py-2 h-40">{{ .Story.Content }}</textarea>
-      {{ with .Errors.content }}<div class="text-red-600 text-sm mt-1">{{ . }}</div>{{ end }}
+      <label class="block font-semibold mb-1">Content (max 500 characters):</label>
+      <textarea name="content" 
+                maxlength="500" 
+                required
+                class="w-full border border-gray-300 rounded px-3 py-2 h-40">{{ .Story.Content }}</textarea>
+      {{ with .Errors.content }}
+      <div class="text-red-600 text-sm mt-1">{{ . }}</div>
+      {{ end }}
+      <div class="text-sm text-gray-500 mt-1">
+        {{ len .Story.Content }}/500 characters
+      </div>
     </div>
 
-    <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Update Story</button>
+    <div class="flex items-center justify-between">
+      <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+        Update Story
+      </button>
+      <a href="/" class="text-blue-600 hover:underline">Back to Home</a>
+    </div>
   </form>
-
-  <a href="/" class="text-blue-600 hover:underline mt-4 inline-block">Back to Home</a>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Update character counters in real-time
+  const titleInput = document.querySelector('input[name="title"]');
+  const contentInput = document.querySelector('textarea[name="content"]');
+  
+  if (titleInput) {
+    titleInput.addEventListener('input', function() {
+      const counter = this.parentElement.querySelector('.text-sm.text-gray-500');
+      if (counter) counter.textContent = `${this.value.length}/20 characters`;
+    });
+  }
+  
+  if (contentInput) {
+    contentInput.addEventListener('input', function() {
+      const counter = this.parentElement.querySelector('.text-sm.text-gray-500');
+      if (counter) counter.textContent = `${this.value.length}/500 characters`;
+    });
+  }
+});
+</script>
 {{ end }}

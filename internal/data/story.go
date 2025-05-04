@@ -9,5 +9,5 @@ type Story struct {
 	UserID    int
 	CreatedAt time.Time
 	UpdatedAt time.Time
-	UserEmail string // For display purposes only
+	UserEmail string
 }

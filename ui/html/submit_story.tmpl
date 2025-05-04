@@ -4,22 +4,65 @@
 <div class="max-w-lg mx-auto bg-white p-6 rounded shadow">
   <h1 class="text-2xl font-bold mb-6">Submit New Story</h1>
 
+  {{ if .Flash }}
+  <div class="mb-4 p-3 bg-green-100 text-green-700 rounded">
+    {{ .Flash }}
+  </div>
+  {{ end }}
+
   <form action="/story/create" method="POST" class="space-y-4">
     {{ .csrfField }}
 
     <div>
-      <label class="block font-semibold mb-1">Title:</label>
-      <input type="text" name="title" value="{{ .Title }}" class="w-full border border-gray-300 rounded px-3 py-2">
-      {{ with .Errors.title }}<div class="text-red-600 text-sm mt-1">{{ . }}</div>{{ end }}
+      <label class="block font-semibold mb-1">Title (10-20 characters):</label>
+      <input type="text" name="title" value="{{ .Title }}" 
+             minlength="10" maxlength="20" required
+             class="w-full border border-gray-300 rounded px-3 py-2">
+      {{ with .Errors.title }}
+      <div class="text-red-600 text-sm mt-1">{{ . }}</div>
+      {{ end }}
+      <div class="text-sm text-gray-500 mt-1">
+        {{ if .Title }}{{ len .Title }}{{ else }}0{{ end }}/20 characters
+      </div>
     </div>
 
     <div>
-      <label class="block font-semibold mb-1">Content:</label>
-      <textarea name="content" class="w-full border border-gray-300 rounded px-3 py-2 h-40">{{ .Content }}</textarea>
-      {{ with .Errors.content }}<div class="text-red-600 text-sm mt-1">{{ . }}</div>{{ end }}
+      <label class="block font-semibold mb-1">Content (max 500 characters):</label>
+      <textarea name="content" maxlength="500" required
+                class="w-full border border-gray-300 rounded px-3 py-2 h-40">{{ .Content }}</textarea>
+      {{ with .Errors.content }}
+      <div class="text-red-600 text-sm mt-1">{{ . }}</div>
+      {{ end }}
+      <div class="text-sm text-gray-500 mt-1">
+        {{ if .Content }}{{ len .Content }}{{ else }}0{{ end }}/500 characters
+      </div>
     </div>
 
-    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Submit Story</button>
+    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+      Submit Story
+    </button>
   </form>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Update character counters in real-time
+  const titleInput = document.querySelector('input[name="title"]');
+  const contentInput = document.querySelector('textarea[name="content"]');
+  
+  if (titleInput) {
+    titleInput.addEventListener('input', function() {
+      const counter = this.parentElement.querySelector('.text-sm.text-gray-500');
+      if (counter) counter.textContent = `${this.value.length}/20 characters`;
+    });
+  }
+  
+  if (contentInput) {
+    contentInput.addEventListener('input', function() {
+      const counter = this.parentElement.querySelector('.text-sm.text-gray-500');
+      if (counter) counter.textContent = `${this.value.length}/500 characters`;
+    });
+  }
+});
+</script>
 {{ end }}

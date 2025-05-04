@@ -9,7 +9,29 @@
       {{ range .Stories }}
         <div class="bg-white p-6 rounded shadow">
           <h2 class="text-xl font-semibold text-blue-700">{{ .Title }}</h2>
-          <p class="text-gray-700 mt-2">{{ .Content }}</p>
+          
+          <div class="text-gray-700 mt-2 relative">
+            <div class="story-content" x-data="{expanded: false}">
+              <p x-show="!expanded" x-ref="shortContent">
+                {{ if gt (len .Content) 200 }}
+                  {{ slice .Content 0 200 }}...
+                {{ else }}
+                  {{ .Content }}
+                {{ end }}
+              </p>
+              <p x-show="expanded" x-ref="fullContent">
+                {{ .Content }}
+              </p>
+              {{ if gt (len .Content) 200 }}
+                <button 
+                  @click="expanded = !expanded" 
+                  class="text-blue-600 hover:underline mt-2"
+                  x-text="expanded ? 'Show Less' : 'Read More'"
+                ></button>
+              {{ end }}
+            </div>
+          </div>
+
           <div class="text-sm text-gray-500 mt-4">
             <span>By {{ .UserEmail }}</span> •
             <span>{{ .CreatedAt.Format "Jan 02, 2006" }}</span>
@@ -31,4 +53,11 @@
     <p class="text-gray-600">No stories to show.</p>
   {{ end }}
 </div>
+
+<!-- Add Alpine.js for the interactive toggle -->
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
+<style>
+  [x-cloak] { display: none !important; }
+</style>
 {{ end }}

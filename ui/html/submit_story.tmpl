@@ -16,8 +16,8 @@
     <div>
       <label class="block font-semibold mb-1">Title (10-20 characters):</label>
       <input type="text" name="title" value="{{ .Title }}" 
-             minlength="10" maxlength="20" required
-             class="w-full border border-gray-300 rounded px-3 py-2">
+             minlength="10" maxlength="20" 
+             class="w-full border rounded px-3 py-2 {{ if .Errors.title }}border-red-600{{ else }}border-gray-300{{ end }}">
       {{ with .Errors.title }}
       <div class="text-red-600 text-sm mt-1">{{ . }}</div>
       {{ end }}
@@ -28,8 +28,8 @@
 
     <div>
       <label class="block font-semibold mb-1">Content (max 500 characters):</label>
-      <textarea name="content" maxlength="500" required
-                class="w-full border border-gray-300 rounded px-3 py-2 h-40">{{ .Content }}</textarea>
+      <textarea name="content" maxlength="500" 
+                class="w-full border rounded px-3 py-2 h-40 {{ if .Errors.content }}border-red-600{{ else }}border-gray-300{{ end }}">{{ .Content }}</textarea>
       {{ with .Errors.content }}
       <div class="text-red-600 text-sm mt-1">{{ . }}</div>
       {{ end }}

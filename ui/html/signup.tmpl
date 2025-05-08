@@ -9,14 +9,20 @@
 
     <div>
       <label class="block font-semibold mb-1">Email:</label>
-      <input type="email" name="email" value="{{ .Email }}" required class="w-full border border-gray-300 rounded px-3 py-2">
-      {{ with .Errors.email }}<div class="text-red-600 text-sm mt-1">{{ . }}</div>{{ end }}
+      <input type="email" name="email" value="{{ .Email }}" required
+             class="w-full border rounded px-3 py-2 {{ if .Errors.email }}border-red-600{{ else }}border-gray-300{{ end }}">
+      {{ with .Errors.email }}
+      <div class="text-red-600 text-sm mt-1">{{ . }}</div>
+      {{ end }}
     </div>
 
     <div>
       <label class="block font-semibold mb-1">Password:</label>
-      <input type="password" name="password" required class="w-full border border-gray-300 rounded px-3 py-2">
-      {{ with .Errors.password }}<div class="text-red-600 text-sm mt-1">{{ . }}</div>{{ end }}
+      <input type="password" name="password" required
+             class="w-full border rounded px-3 py-2 {{ if .Errors.password }}border-red-600{{ else }}border-gray-300{{ end }}">
+      {{ with .Errors.password }}
+      <div class="text-red-600 text-sm mt-1">{{ . }}</div>
+      {{ end }}
     </div>
 
     <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Sign Up</button>

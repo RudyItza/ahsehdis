@@ -21,7 +21,7 @@
              minlength="10" 
              maxlength="20" 
              required
-             class="w-full border border-gray-300 rounded px-3 py-2">
+             class="w-full border rounded px-3 py-2 {{ if .Errors.title }}border-red-600{{ else }}border-gray-300{{ end }}">
       {{ with .Errors.title }}
       <div class="text-red-600 text-sm mt-1">{{ . }}</div>
       {{ end }}
@@ -35,7 +35,7 @@
       <textarea name="content" 
                 maxlength="500" 
                 required
-                class="w-full border border-gray-300 rounded px-3 py-2 h-40">{{ .Story.Content }}</textarea>
+                class="w-full border rounded px-3 py-2 h-40 {{ if .Errors.content }}border-red-600{{ else }}border-gray-300{{ end }}">{{ .Story.Content }}</textarea>
       {{ with .Errors.content }}
       <div class="text-red-600 text-sm mt-1">{{ . }}</div>
       {{ end }}

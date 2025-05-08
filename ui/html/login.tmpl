@@ -9,14 +9,22 @@
 
     <div>
       <label class="block font-semibold mb-1">Email:</label>
-      <input type="email" name="email" value="{{ .Email }}" class="w-full border border-gray-300 rounded px-3 py-2">
-      {{ with .Errors.email }}<div class="text-red-600 text-sm mt-1">{{ . }}</div>{{ end }}
+      <input type="email" name="email" value="{{ .Email }}" 
+             class="w-full border rounded px-3 py-2 
+             {{ if or .Errors.email .Error }}border-red-600{{ else }}border-gray-300{{ end }}">
+      {{ with .Errors.email }}
+      <div class="text-red-600 text-sm mt-1">{{ . }}</div>
+      {{ end }}
     </div>
 
     <div>
       <label class="block font-semibold mb-1">Password:</label>
-      <input type="password" name="password" class="w-full border border-gray-300 rounded px-3 py-2">
-      {{ with .Errors.password }}<div class="text-red-600 text-sm mt-1">{{ . }}</div>{{ end }}
+      <input type="password" name="password" 
+             class="w-full border rounded px-3 py-2 
+             {{ if or .Errors.password .Error }}border-red-600{{ else }}border-gray-300{{ end }}">
+      {{ with .Errors.password }}
+      <div class="text-red-600 text-sm mt-1">{{ . }}</div>
+      {{ end }}
     </div>
 
     {{ if .Error }}
@@ -26,6 +34,9 @@
     <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Login</button>
   </form>
 
-  <p class="mt-4 text-sm">Don't have an account? <a href="/signup" class="text-blue-600 hover:underline">Sign up here</a></p>
+  <p class="mt-4 text-sm">Don't have an account? 
+    <a href="/signup" class="text-blue-600 hover:underline">Sign up here</a>
+  </p>
 </div>
 {{ end }}
+
